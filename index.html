@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astha · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a mathematician's graph-paper notebook. Margin-note column on the left, work on the right. */
+:root{
+  --paper:#f4f6f9;
+  --grid:#dfe5ee;
+  --ink:#172033;
+  --muted:#5a6478;
+  --accent:#2347c5;      /* ink-blue pen */
+  --note:#c23b3b;        /* red margin-pencil */
+  --card:#ffffff;
+  --rule:#cfd6e2;
+  --display:"Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1522; --grid:#1a2335; --ink:#e6eaf2; --muted:#98a2b8;
+    --accent:#86a2ff; --note:#ff8a80; --card:#151d2e; --rule:#2a3550;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1522; --grid:#1a2335; --ink:#e6eaf2; --muted:#98a2b8;
+  --accent:#86a2ff; --note:#ff8a80; --card:#151d2e; --rule:#2a3550;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0; background-color:var(--paper); color:var(--ink);
+  font:16px/1.6 var(--body);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:24px 24px;
+}
+a{color:var(--accent); text-underline-offset:3px}
+a:focus-visible, button:focus-visible, input:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+
+/* nav */
+nav{position:sticky; top:0; z-index:5; background:color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter:blur(6px); border-bottom:1px solid var(--rule)}
+nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:56px}
+nav .mark{font-family:var(--display); font-size:24px; color:var(--ink); text-decoration:none}
+nav ul{display:flex; gap:20px; list-style:none; margin:0; padding:0; font:500 13px var(--mono); flex-wrap:wrap}
+nav ul a{color:var(--muted); text-decoration:none}
+nav ul a:hover{color:var(--accent)}
+
+/* section skeleton: margin note + content */
+section{padding:72px 0; border-bottom:1px solid var(--rule)}
+.row{display:grid; grid-template-columns:180px 1fr; gap:40px}
+.margin{font:500 12px/1.5 var(--mono); color:var(--note); text-transform:uppercase; letter-spacing:.08em; padding-top:10px}
+.margin span{display:block; color:var(--muted); text-transform:none; letter-spacing:0; margin-top:6px; font-weight:400}
+h2{font:400 44px/1.1 var(--display); margin:0 0 24px; text-wrap:balance}
+h3{font:600 19px/1.3 var(--body); margin:0}
+p{margin:0 0 14px; max-width:65ch}
+
+/* hero */
+.hero{padding:72px 0 64px}
+.hero h1{font:400 clamp(52px, 9vw, 112px)/.95 var(--display); margin:0 0 20px; letter-spacing:-.01em}
+.hero h1 em{color:var(--accent)}
+.hero .lede{font-size:19px; color:var(--muted); max-width:58ch}
+.eq{font:italic 400 22px var(--display); color:var(--note); margin:0 0 18px}
+.meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+.chip{font:500 12.5px var(--mono); padding:6px 11px; border:1px solid var(--rule); border-radius:3px; background:var(--card); color:var(--ink); text-decoration:none}
+a.chip:hover{border-color:var(--accent); color:var(--accent)}
+
+/* retrieval demo */
+.demo{margin-top:44px; background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--accent); padding:22px 24px; max-width:760px}
+.demo label{display:block; font:500 12px var(--mono); color:var(--muted); margin-bottom:8px}
+.demo .q{display:flex; gap:8px; flex-wrap:wrap}
+.demo input{flex:1; min-width:200px; font:15px var(--mono); padding:10px 12px; border:1px solid var(--rule); background:var(--paper); color:var(--ink); border-radius:3px}
+.demo button{font:500 13px var(--mono); padding:10px 14px; border:1px solid var(--accent); background:var(--accent); color:var(--card); border-radius:3px; cursor:pointer}
+.demo button.ghost{background:transparent; color:var(--accent)}
+.demo ol{list-style:none; margin:18px 0 0; padding:0; display:grid; gap:10px}
+.demo li{display:grid; grid-template-columns:1fr 170px; gap:14px; align-items:center}
+.demo li a{font-weight:500; text-decoration:none}
+.demo li a:hover{text-decoration:underline}
+.bar{position:relative; height:8px; background:var(--grid); border-radius:2px}
+.bar i{position:absolute; inset:0 auto 0 0; background:var(--accent); border-radius:2px; transition:width .35s ease}
+.bar b{position:absolute; right:0; top:-20px; font:500 11.5px var(--mono); color:var(--muted); font-variant-numeric:tabular-nums}
+.demo .foot{font:12px var(--mono); color:var(--muted); margin:16px 0 0}
+.chips-try{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px}
+
+/* projects */
+.featured{background:var(--card); border:1px solid var(--rule); padding:30px; margin-bottom:28px}
+.featured .kicker{font:500 12px var(--mono); color:var(--note); margin-bottom:8px}
+.featured h3{font:400 34px/1.15 var(--display); margin-bottom:14px}
+.stat{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:18px; margin:22px 0}
+.stat div{border-top:2px solid var(--ink); padding-top:10px}
+.stat strong{display:block; font:400 46px/1 var(--display); font-variant-numeric:tabular-nums}
+.stat span{font-size:13.5px; color:var(--muted)}
+.pipeline{font:13px/1.9 var(--mono); color:var(--ink); background:var(--paper); border:1px dashed var(--rule); padding:12px 14px; overflow-x:auto; white-space:nowrap}
+.pipeline .arr{color:var(--note)}
+.tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:16px}
+.tag{font:500 11.5px var(--mono); padding:3px 8px; background:var(--paper); border:1px solid var(--rule); border-radius:2px; color:var(--muted)}
+.links{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; font:500 13.5px var(--mono)}
+
+.grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:20px}
+.proj{background:var(--card); border:1px solid var(--rule); padding:22px; display:flex; flex-direction:column}
+.proj .kicker{font:500 11.5px var(--mono); color:var(--muted); margin-bottom:6px}
+.proj p{font-size:15px; margin:10px 0 0}
+.proj .tags{margin-top:auto; padding-top:16px}
+
+/* skills */
+.skills{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:26px}
+.skills h3{font:500 12px var(--mono); color:var(--note); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px}
+.skills ul{list-style:none; margin:0; padding:0; display:grid; gap:4px}
+.skills li{border-bottom:1px dotted var(--rule); padding:4px 0}
+
+/* timeline */
+.tl{display:grid; gap:0}
+.tl div{display:grid; grid-template-columns:120px 1fr; gap:24px; padding:18px 0; border-top:1px solid var(--rule)}
+.tl div:first-child{border-top:none; padding-top:0}
+.tl time{font:500 13px var(--mono); color:var(--muted); font-variant-numeric:tabular-nums}
+.tl p{margin:4px 0 0; color:var(--muted); font-size:15px}
+
+/* contact */
+.contact h2{font-size:clamp(40px, 6vw, 64px)}
+footer{padding:28px 0 40px; font:12px var(--mono); color:var(--muted)}
+
+@media (max-width:760px){
+  .row{grid-template-columns:1fr; gap:10px}
+  .grid{grid-template-columns:1fr}
+  section{padding:52px 0}
+  nav ul{gap:12px; font-size:12px}
+  .demo li{grid-template-columns:1fr; gap:22px}
+  .tl div{grid-template-columns:1fr; gap:4px}
+  .featured{padding:22px}
+}
+@media (max-width:440px){ nav ul li:nth-child(n+4){display:none} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="mark" href="#top">Astha</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eq">sim(q, d) = q·d / ‖q‖‖d‖</p>
+    <h1>Trained in <em>proofs</em>.<br>Building backends<br>and retrieval systems.</h1>
+    <p class="lede">I'm Astha, a final-year M.Tech CSE student at ABV-IIITM Gwalior. I came to computer science from an M.Sc. in Mathematics, and I now build Java and Spring Boot services and RAG pipelines, checking my own results the way I'd check a proof.</p>
+    <div class="meta">
+      <span class="chip">M.Tech CSE · CGPA 8.34</span>
+      <span class="chip">Gwalior, India</span>
+      <a class="chip" href="https://github.com/asthaberi">github.com/asthaberi</a>
+      <a class="chip" href="https://huggingface.co/asthaberi">huggingface.co/asthaberi</a>
+    </div>
+
+    <div class="demo" aria-labelledby="demo-title">
+      <label id="demo-title" for="query">Search my work. This box runs a small bag-of-words retriever with cosine similarity, the same steps I built from scratch for my RAG drill.</label>
+      <form class="q" id="qform">
+        <input id="query" type="text" value="cache backend api" autocomplete="off" spellcheck="false">
+        <button type="submit" id="go">Retrieve top-3</button>
+      </form>
+      <div class="chips-try" aria-label="Example queries">
+        <button class="chip ghost-q" type="button" data-q="data leakage validation split">data leakage</button>
+        <button class="chip ghost-q" type="button" data-q="embeddings faiss retrieval">embeddings</button>
+        <button class="chip ghost-q" type="button" data-q="time series forecasting">forecasting</button>
+        <button class="chip ghost-q" type="button" data-q="sensor dataset survey">sensing research</button>
+      </div>
+      <ol id="results" aria-live="polite"></ol>
+      <p class="foot" id="foot">tokenize → bag-of-words vectors → cosine similarity → rank</p>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="wrap row">
+    <div class="margin">01 · Work<span>Projects, with what I learned from each</span></div>
+    <div>
+      <h2>Selected projects</h2>
+
+      <article class="featured" id="p-mcq">
+        <div class="kicker">Featured · IIT Madras Deep Learning &amp; GenAI diploma · Kaggle</div>
+        <h3>Smart MCQ Solver</h3>
+        <p>A model that picks the correct answer to multiple-choice questions. I fine-tuned DeBERTa-v3-small and RoBERTa-base with LoRA through Hugging Face's <code>AutoModelForMultipleChoice</code>, then deployed the final model to the Hugging Face Hub with a Streamlit front end.</p>
+        <p>The most important result was a bug in the evaluation. Random train/validation splits put near-duplicate prompts on both sides, so validation scores were inflated. After I switched to grouped splits, the leakage went to zero, and the model choice reversed: a single RoBERTa-base beat the ensembles that had looked better before.</p>
+        <div class="stat">
+          <div><strong>63.1%</strong><span>prompt-core overlap between train and validation on random splits</span></div>
+          <div><strong>0%</strong><span>overlap after switching to grouped splits</span></div>
+          <div><strong>1 model</strong><span>RoBERTa-base alone chosen over ensembles once leakage was removed</span></div>
+        </div>
+        <p style="margin-top:6px"><strong>RAG extension.</strong> I added a retrieval-augmented pipeline to answer from source text:</p>
+        <div class="pipeline">Wikipedia scrape <span class="arr">→</span> clean <span class="arr">→</span> chunk <span class="arr">→</span> embed (MiniLM) <span class="arr">→</span> FAISS index <span class="arr">→</span> generate (flan-t5-base)</div>
+        <div class="tags"><span class="tag">PyTorch</span><span class="tag">Transformers</span><span class="tag">LoRA / PEFT</span><span class="tag">RoBERTa</span><span class="tag">DeBERTa-v3</span><span class="tag">FAISS</span><span class="tag">Sentence embeddings</span><span class="tag">Streamlit</span></div>
+        <div class="links"><a href="https://huggingface.co/asthaberi/mcq-roberta-base">Model on Hugging Face →</a></div>
+      </article>
+
+      <div class="grid">
+        <article class="proj" id="p-qeats">
+          <div class="kicker">Backend · Java</div>
+          <h3>QEats: food-ordering REST API</h3>
+          <p>A Spring Boot REST service for browsing restaurants and menus, backed by MongoDB. I added a Redis cache using the cache-aside pattern: reads check Redis first and fall back to MongoDB on a miss, then fill the cache.</p>
+          <div class="tags"><span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">MongoDB</span><span class="tag">Redis</span><span class="tag">REST</span></div>
+        </article>
+
+        <article class="proj" id="p-rag">
+          <div class="kicker">Retrieval · Python</div>
+          <h3>RAG from first principles</h3>
+          <p>A retrieval pipeline written without libraries, with self-grading tests at each step: tokenize, chunk with overlap, build a vocabulary, embed as bag-of-words vectors, rank by cosine similarity, retrieve top-k and assemble the prompt. The search box at the top of this page runs the same steps.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Information retrieval</span><span class="tag">Vector math</span></div>
+        </article>
+
+        <article class="proj" id="p-jena">
+          <div class="kicker">Course project · CS-754 Time Series Analysis</div>
+          <h3>Jena climate temperature forecasting</h3>
+          <p>Hourly temperature forecasting on the Jena climate dataset using only classical models (AR, MA, ARMA, ARIMA and SARIMA), with the focus on choosing model orders, handling seasonality and reading the diagnostics.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">statsmodels</span><span class="tag">ARIMA / SARIMA</span><span class="tag">Time series</span></div>
+        </article>
+
+        <article class="proj" id="p-har">
+          <div class="kicker">M.Tech research</div>
+          <h3>Patient monitoring with whole-environment sensing</h3>
+          <p>A survey of human-activity-recognition and activities-of-daily-living datasets for health monitoring. I built a 25-dataset comparison based on Chen et al. (2021, ACM Computing Surveys) and found that only 6 of the 25 capture the whole environment, which shaped the research questions on RF and Wi-Fi sensing.</p>
+          <div class="tags"><span class="tag">HAR / ADL</span><span class="tag">Sensing</span><span class="tag">Literature review</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap row">
+    <div class="margin">02 · Skills<span>What I use, grouped by job</span></div>
+    <div>
+      <h2>Toolkit</h2>
+      <div class="skills">
+        <div>
+          <h3>Languages</h3>
+          <ul><li>Java</li><li>Python</li><li>SQL (MySQL)</li><li>JavaScript</li></ul>
+        </div>
+        <div>
+          <h3>Backend</h3>
+          <ul><li>Spring Boot</li><li>REST API design</li><li>MongoDB</li><li>Redis caching</li></ul>
+        </div>
+        <div>
+          <h3>ML &amp; retrieval</h3>
+          <ul><li>PyTorch, Hugging Face</li><li>LoRA fine-tuning</li><li>Embeddings, FAISS</li><li>RAG pipelines</li></ul>
+        </div>
+        <div>
+          <h3>CS foundations</h3>
+          <ul><li>Data structures &amp; algorithms</li><li>OOP, LLD / HLD</li><li>DBMS, OS, networks</li><li>React (learning)</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap row">
+    <div class="margin">03 · Education<span>From mathematics to computer science</span></div>
+    <div>
+      <h2>Education</h2>
+      <div class="tl">
+        <div><time>Expected 2027</time><div><h3>M.Tech, Computer Science &amp; Engineering</h3><p>ABV-Indian Institute of Information Technology and Management, Gwalior · CGPA 8.34</p></div></div>
+        <div><time>2026</time><div><h3>Diploma coursework, Deep Learning &amp; Generative AI</h3><p>IIT Madras · Smart MCQ Solver project</p></div></div>
+        <div><time>Earlier</time><div><h3>M.Sc., Mathematics</h3><p>Kumaun University</p></div></div>
+        <div><time>Earlier</time><div><h3>B.Sc., Physics, Chemistry &amp; Mathematics</h3><p>Kumaun University</p></div></div>
+      </div>
+      <p style="margin-top:24px; color:var(--muted)">Away from the desk: gold medallist in badminton.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact" style="border-bottom:none">
+  <div class="wrap row">
+    <div class="margin">04 · Contact<span>Open to SWE / backend roles</span></div>
+    <div>
+      <h2>Let's talk about backend or retrieval work.</h2>
+      <p>I'm looking for software engineering roles with a backend focus, and I'm happy to go through any of these projects in detail.</p>
+      <div class="meta">
+        <a class="chip" href="https://github.com/asthaberi">GitHub · asthaberi</a>
+        <a class="chip" href="https://huggingface.co/asthaberi">Hugging Face · asthaberi</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© 2026 Astha · Built as a single HTML page</div></footer>
+
+<script>
+(function(){
+  const docs = [
+    {id:"p-mcq", title:"Smart MCQ Solver", text:"multiple choice question answering fine tuned roberta deberta lora hugging face transformers streamlit deployment kaggle data leakage validation split grouped split evaluation ensemble model selection rag retrieval wikipedia chunk embed minilm embeddings faiss vector index flan t5 generation"},
+    {id:"p-qeats", title:"QEats REST API", text:"java spring boot rest api backend service mongodb database redis cache aside caching restaurants menus food ordering endpoints"},
+    {id:"p-rag", title:"RAG from first principles", text:"python retrieval rag tokenize chunk overlap vocabulary bag of words embed embeddings vectors cosine similarity rank top k prompt retrieval search from scratch"},
+    {id:"p-jena", title:"Jena climate forecasting", text:"time series forecasting temperature hourly jena climate ar ma arma arima sarima seasonality statsmodels python statistics"},
+    {id:"p-har", title:"Whole-environment sensing research", text:"research patient health monitoring human activity recognition activities daily living har adl sensor sensing dataset datasets survey comparison rf wifi environment"}
+  ];
+  const stop = new Set("a an the of and or to for in on with my is are i me what how".split(" "));
+  const tok = s => s.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(w => w && !stop.has(w));
+  const vocab = new Map();
+  docs.forEach(d => tok(d.text + " " + d.title).forEach(w => { if(!vocab.has(w)) vocab.set(w, vocab.size); }));
+  const vec = words => { const v = new Map(); words.forEach(w => { if(vocab.has(w)){ const i = vocab.get(w); v.set(i,(v.get(i)||0)+1); } }); return v; };
+  const norm = v => Math.sqrt([...v.values()].reduce((s,x)=>s+x*x,0));
+  const cos = (a,b) => { let dot=0; a.forEach((x,i)=>{ if(b.has(i)) dot += x*b.get(i); }); const n = norm(a)*norm(b); return n ? dot/n : 0; };
+  docs.forEach(d => d.v = vec(tok(d.text + " " + d.title)));
+
+  const out = document.getElementById("results"), foot = document.getElementById("foot"), input = document.getElementById("query");
+  function run(){
+    const qw = tok(input.value), qv = vec(qw);
+    const hits = qw.filter(w => vocab.has(w));
+    const ranked = docs.map(d => ({d, s:cos(qv, d.v)})).sort((x,y)=>y.s-x.s).slice(0,3);
+    const max = Math.max(ranked[0].s, 1e-9);
+    out.innerHTML = ranked.map(r => `<li><a href="#${r.d.id}">${r.d.title}</a><div class="bar" aria-label="cosine ${r.s.toFixed(3)}"><i style="width:${(r.s/max*100).toFixed(1)}%"></i><b>cos ${r.s.toFixed(3)}</b></div></li>`).join("");
+    foot.textContent = hits.length
+      ? `${qw.length} tokens · ${hits.length} in vocabulary (${vocab.size} terms) → cosine similarity → top-3`
+      : `None of these words are in the vocabulary of ${vocab.size} terms, so every score is 0. Try "redis", "faiss" or "arima".`;
+  }
+  document.getElementById("qform").addEventListener("submit", e => { e.preventDefault(); run(); });
+  document.querySelectorAll(".ghost-q").forEach(b => b.addEventListener("click", () => { input.value = b.dataset.q; run(); }));
+  run();
+})();
+</script>
+</body>
+</html>
